@@ -15,11 +15,6 @@ var frequencyData = new Uint8Array(analyser.frequencyBinCount);
 var audioBuffer;
 var audioSource;
 
-var rect = new PIXI.Graphics();
-var layout = new PIXI.Graphics();
-
-
-
 class App {
 
     constructor() {
@@ -32,23 +27,20 @@ class App {
 
         this.scene = new Scene();
 
+        this.city = new PIXI.Graphics();
+
 
 
         let root = document.body.querySelector('.app')
         root.appendChild(this.scene.renderer.view);
 
 
-
-        this.ball = new Graphics();
-        this.ball.beginFill(0xFAFBCF);
-        this.ball.drawCircle(0, 0, 50);
-        this.ball.y = window.innerHeight / 5;
-
-
         //this.drawLayout();
+        this.drawMoon();
+        this.drawStars();
 
-        this.scene.addChild(this.ball);
-        this.scene.addChild(rect);
+
+        this.scene.addChild(this.city);
 
 
         this.addListeners();
@@ -74,15 +66,20 @@ class App {
     update() {
 
         analyser.getByteFrequencyData(frequencyData);
-        this.draw();
+        this.drawCity();
 
         this.DELTA_TIME = Date.now() - this.LAST_TIME;
         this.LAST_TIME = Date.now();
 
-        angle += 0.01;
+        //angle += 0.01;
+        //
+        //this.ball.alpha =1 ;
+        //this.ball.x = ( window.innerWidth / 2 ) + Math.sin(angle) * 180;
 
-        this.ball.alpha =1 ;
-        this.ball.x = ( window.innerWidth / 2 ) + Math.sin(angle) * 180;
+        this.moon.speed = (window.innerWidth - this.moon.radius * 4) / 180 / 60;
+        this.moon.x += this.moon.speed;
+
+        this.stars.x -= this.stars.speed;
 
         this.scene.render();
 
@@ -131,10 +128,11 @@ class App {
         request.send();
     }
 
-    draw() {
+    drawCity() {
 
 
-        rect.clear();
+
+        this.city.clear();
 
 
         var x = 0;
@@ -143,14 +141,14 @@ class App {
         var barsWidth = window.innerWidth/numberOfBars;
 
 
-        rect.beginFill(0x000000);
+        this.city.beginFill(0x000000);
 
         for (var i = 0; i <= numberOfBars; i++) {
-            rect.drawRect(x, window.innerHeight, barsWidth, -(window.innerHeight - (frequencyData[i+divider] * 2.5)));
+            this.city.drawRect(x, window.innerHeight, barsWidth, -(window.innerHeight - (frequencyData[i+divider] * 2.5)));
             x += barsWidth;
         }
 
-        rect.endFill();
+        this.city.endFill();
 
 
 
@@ -172,6 +170,32 @@ class App {
         layout.drawRect(0, 0, window.innerWidth, window.innerHeight);
         layout.endFill();
         this.scene.addChild(layout);
+    }
+
+    drawStars() {
+
+        this.stars = new Graphics();
+        this.stars.speed = (window.innerWidth / 180 / 60)*0.5;
+
+        this.stars.beginFill(0xFAFBCF);
+
+        for(let i = 0; i < 50; i++){
+            this.stars.drawCircle(Math.random()*window.innerWidth, Math.random()*window.innerHeight, 1);
+        }
+
+        this.stars.endFill();
+
+        this.scene.addChild(this.stars);
+    }
+
+    drawMoon() {
+        this.moon = new Graphics();
+
+        this.moon.radius = 50;
+        this.moon.beginFill(0xFAFBCF);
+        this.moon.drawCircle(this.moon.radius + 50, window.innerHeight / 5, this.moon.radius);
+
+        this.scene.addChild(this.moon);
     }
 
 }

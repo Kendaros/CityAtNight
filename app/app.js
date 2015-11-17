@@ -32,20 +32,27 @@ class App {
 
         this.scene = new Scene();
 
+
+
         let root = document.body.querySelector('.app')
         root.appendChild(this.scene.renderer.view);
-        this.scene.addChild(rect);
+
+
 
         this.ball = new Graphics();
-        this.ball.beginFill(0x000000);
+        this.ball.beginFill(0xFAFBCF);
         this.ball.drawCircle(0, 0, 50);
         this.ball.y = window.innerHeight / 5;
+
+
+        //this.drawLayout();
+
         this.scene.addChild(this.ball);
+        this.scene.addChild(rect);
 
 
         this.addListeners();
 
-        //this.drawLayout();
         this.loadSound();
 
     }
@@ -136,17 +143,10 @@ class App {
         var barsWidth = window.innerWidth/numberOfBars;
 
 
-        rect.beginFill(0xFFFFFF);
-
-        rect.endFill();
-
-
-
-
-        rect.beginFill(0xFFFFFF);
+        rect.beginFill(0x000000);
 
         for (var i = 0; i <= numberOfBars; i++) {
-            rect.drawRect(x, 0, barsWidth, frequencyData[i+divider] * 2.5);
+            rect.drawRect(x, window.innerHeight, barsWidth, -(window.innerHeight - (frequencyData[i+divider] * 2.5)));
             x += barsWidth;
         }
 
@@ -162,14 +162,14 @@ class App {
         var numberOfBars = 1024/8;
         var barsWidth = 1;
 
-        layout.beginFill(0xFFFFFF);
+        layout.beginFill(0x000000);
 
-        for (var i = 0; i <= numberOfBars; i++) {
-            layout.drawRect(x, 0, barsWidth, window.innerHeight);
-            x += window.innerWidth/numberOfBars;
-        }
+        //for (var i = 0; i <= numberOfBars; i++) {
+        //    layout.drawRect(x, 0, barsWidth, window.innerHeight);
+        //    x += window.innerWidth/numberOfBars;
+        //}
 
-        //layout.drawRect(0, 0, window.innerWidth, window.innerHeight / 2);
+        layout.drawRect(0, 0, window.innerWidth, window.innerHeight);
         layout.endFill();
         this.scene.addChild(layout);
     }

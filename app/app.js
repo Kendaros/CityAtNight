@@ -39,7 +39,7 @@ class App {
         this.ball = new Graphics();
         this.ball.beginFill(0x000000);
         this.ball.drawCircle(0, 0, 50);
-        this.ball.y = window.innerHeight / 2 - 200;
+        this.ball.y = window.innerHeight / 5;
         this.scene.addChild(this.ball);
 
 
@@ -47,13 +47,6 @@ class App {
 
         //this.drawLayout();
         this.loadSound();
-
-        window.addEventListener('resize', resize);
-
-        function resize() {
-            renderer.resize(window.innerWidth, window.innerHeight);
-        }
-
 
     }
 

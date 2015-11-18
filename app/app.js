@@ -3,8 +3,7 @@ import Scene from './scene/scene';
 import { Graphics } from 'pixi.js';
 import NumberUtils from './utils/number-utils';
 
-
-let angle = 0;
+import Emitter from './lib/emitter'
 
 var audioCtx = new AudioContext();
 var analyser = audioCtx.createAnalyser();
@@ -25,26 +24,22 @@ class App {
         this.width = window.innerWidth;
         this.height = window.innerHeight;
 
+
         this.scene = new Scene();
 
         this.city = new PIXI.Graphics();
-
-
 
         let root = document.body.querySelector('.app')
         root.appendChild(this.scene.renderer.view);
 
 
-        //this.drawLayout();
         this.drawMoon();
         this.drawStars();
-
 
         this.scene.addChild(this.city);
 
 
         this.addListeners();
-
         this.loadSound();
 
     }
@@ -71,21 +66,14 @@ class App {
         this.DELTA_TIME = Date.now() - this.LAST_TIME;
         this.LAST_TIME = Date.now();
 
-        //angle += 0.01;
-        //
-        //this.ball.alpha =1 ;
-        //this.ball.x = ( window.innerWidth / 2 ) + Math.sin(angle) * 180;
+        this.moon.update(this.DELTA_TIME);
 
-        this.moon.speed = (window.innerWidth - this.moon.radius * 4) / 180 / 60;
+        this.moon.speed = (window.innerWidth) / 180 / 60;
         this.moon.x += this.moon.speed;
 
         this.stars.x -= this.stars.speed;
 
         this.scene.render();
-
-
-
-        //console.log(frequencyData[0]);
 
     }
 
@@ -104,6 +92,7 @@ class App {
     }
 
     loadSound() {
+        
         var request = new XMLHttpRequest();
         request.open('GET', 'assets/sounds/lifeformed-sunbleach.mp3', true);
         request.responseType = 'arraybuffer';
@@ -130,13 +119,10 @@ class App {
 
     drawCity() {
 
-
-
         this.city.clear();
 
-
         var x = 0;
-        var divider = 8;
+        var divider = 16;
         var numberOfBars = 1024/divider;
         var barsWidth = window.innerWidth/numberOfBars;
 
@@ -149,8 +135,6 @@ class App {
         }
 
         this.city.endFill();
-
-
 
     }
 
@@ -189,11 +173,13 @@ class App {
     }
 
     drawMoon() {
-        this.moon = new Graphics();
+        //this.moon = new Graphics();
+        //
+        //this.moon.radius = 50;
+        //this.moon.beginFill(0xFAFBCF);
+        //this.moon.drawCircle(this.moon.radius + 50, window.innerHeight / 5, this.moon.radius);
 
-        this.moon.radius = 50;
-        this.moon.beginFill(0xFAFBCF);
-        this.moon.drawCircle(this.moon.radius + 50, window.innerHeight / 5, this.moon.radius);
+        this.moon = new Emitter(this.scene);
 
         this.scene.addChild(this.moon);
     }

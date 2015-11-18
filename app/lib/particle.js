@@ -45,6 +45,8 @@ class Particle extends Sprite {
         this.x = options.x;
         this.y = options.y;
         this.acceleration = 0.1;
+        this.vx = this.acceleration;
+        this.vy = this.acceleration;
         this.scale.factor = Math.random() * 1.2;
         this.scale.x = this.scale.factor;
         this.scale.y = this.scale.factor;

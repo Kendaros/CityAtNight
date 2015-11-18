@@ -4,13 +4,16 @@ import Particle from './particle'
 import Utils from '../utils/number-utils'
 
 class Emitter extends Container {
-    constructor() {
+    constructor(frequencyData) {
 
         super();
+
+        this.frequencyData = frequencyData;
 
         this.particles = [];
         this.pool = [];
         this.currentTime = 0;
+        this.currentTimePulse = 0;
         this.nb = 10000;
 
         this.options = {
@@ -52,6 +55,8 @@ class Emitter extends Container {
     update(dt) {
 
         for (var i = 0; i < this.particles.length; i++) {
+
+
             this.particles[i].move(dt);
 
             if (this.currentTime > 50) {
@@ -64,7 +69,24 @@ class Emitter extends Container {
                 this.returnParticleToPool(this.particles[i], i);
             }
         }
+
+        var sumFrequency = 0;
+
+        for (let i = 0; i < (this.frequencyData.length - 1024/4); i++) {
+
+            sumFrequency += this.frequencyData[i];
+
+        }
+
+        this.averageFrequency = sumFrequency/(this.frequencyData.length - 1024/4);
+        //console.log(this.averageFrequency);
+
+        if(this.averageFrequency > 70 && this.currentTimePulse > 140/60*1000) {
+            this.pulse(dt);
+        }
+
         this.currentTime += dt;
+        this.currentTimePulse += dt;
     }
 
     move(dt) {
@@ -73,15 +95,19 @@ class Emitter extends Container {
     }
 
 
-    //pulse() {
-    //    for (let i = 0; i < 500; i++) {
-    //        let particle = this.getParticleFromPool();
-    //        particle.life = 2000;
-    //        particle.acceleration = 0.9;
-    //        this.particles.push(particle);
-    //        this.addChild(particle);
-    //    }
-    //}
+    pulse() {
+
+        for (let i = 0; i < 100; i++) {
+            let particle = this.getParticleFromPool();
+            particle.life = 4000;
+            particle.vx = 6;
+            particle.vy = 6;
+            this.particles.push(particle);
+            this.addChild(particle);
+        }
+
+        this.currentTimePulse = 0;
+    }
 }
 
 export default Emitter

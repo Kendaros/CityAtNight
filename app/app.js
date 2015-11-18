@@ -68,8 +68,6 @@ class App {
 
         this.music.analyser.getByteFrequencyData(this.music.frequencyData);
 
-        //this.drawCity();
-
         this.DELTA_TIME = Date.now() - this.LAST_TIME;
         this.LAST_TIME = Date.now();
 
@@ -100,7 +98,7 @@ class App {
 
     drawMoon() {
 
-        this.moon = new Emitter(this.scene);
+        this.moon = new Emitter(this.music.frequencyData);
         this.scene.addChild(this.moon);
 
     }

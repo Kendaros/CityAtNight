@@ -3,8 +3,8 @@ import { Container } from 'pixi.js';
 import Particle from './particle'
 import Utils from '../utils/number-utils'
 
-class Emitter extends Container{
-    constructor(){
+class Emitter extends Container {
+    constructor() {
 
         super();
 
@@ -18,24 +18,17 @@ class Emitter extends Container{
             y: window.innerHeight / 5
         };
 
-
-
         for (let i = 0; i < this.nb; i++) {
-
             let particle = new Particle(this.options);
             this.pool.push(particle);
         }
-
         this.throw(1);
-
     }
 
     getParticleFromPool() {
         let p = this.pool[0];
-
         p.reset(this.options);
-
-        this.pool.splice(0,1);
+        this.pool.splice(0, 1);
         return p;
     }
 
@@ -46,41 +39,49 @@ class Emitter extends Container{
         this.removeChild(this.particles[index]);
     }
 
-    throw(nb){
-
-
+    throw(nb) {
 
         for (let i = 0; i < nb; i++) {
-
             let particle = this.getParticleFromPool();
-
             this.particles.push(particle);
             this.addChild(particle);
-
         }
 
     }
 
-    update(dt){
+    update(dt) {
 
-        //console.info(this.particles.length, this.pool.length);
-        for(var i = 0; i < this.particles.length; i++) {
+        for (var i = 0; i < this.particles.length; i++) {
             this.particles[i].move(dt);
 
-            if(this.currentTime > 50) {
+            if (this.currentTime > 50) {
                 this.currentTime = 0;
                 this.throw(5);
             }
 
-            if(!this.particles[i].isAlive){
+            if (!this.particles[i].isAlive) {
 
                 this.returnParticleToPool(this.particles[i], i);
             }
-
-            //console.info(this.particles[i].life);
         }
         this.currentTime += dt;
     }
+
+    move(dt) {
+        this.speed = (window.innerWidth) / 180 / 180;
+        this.x += this.speed;
+    }
+
+
+    //pulse() {
+    //    for (let i = 0; i < 500; i++) {
+    //        let particle = this.getParticleFromPool();
+    //        particle.life = 2000;
+    //        particle.acceleration = 0.9;
+    //        this.particles.push(particle);
+    //        this.addChild(particle);
+    //    }
+    //}
 }
 
 export default Emitter

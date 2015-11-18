@@ -25,8 +25,6 @@ class Particle extends Sprite {
 
         this.isAlive = true;
 
-
-
     }
 
     move(dt){
@@ -46,6 +44,7 @@ class Particle extends Sprite {
     reset(options) {
         this.x = options.x;
         this.y = options.y;
+        this.acceleration = 0.1;
         this.scale.factor = Math.random() * 1.2;
         this.scale.x = this.scale.factor;
         this.scale.y = this.scale.factor;

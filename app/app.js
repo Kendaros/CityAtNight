@@ -6,8 +6,10 @@ import NumberUtils from './utils/number-utils';
 import Music from './lib/music'
 import City from './lib/city'
 import Emitter from './lib/emitter'
-import Stars from './lib/stars'
+import StarsSky from './lib/starssky'
 import EventEmitter from './lib/event-emitter'
+
+var john = 0;
 
 class App {
 
@@ -47,8 +49,16 @@ class App {
     addListeners() {
 
         window.addEventListener('resize', this.onResize.bind(this));
-        TweenMax.ticker.addEventListener('tick', this.update.bind(this))
+        TweenMax.ticker.addEventListener('tick', this.update.bind(this));
 
+        window.addEventListener('click', this.log.bind(this));
+
+    }
+
+    log() {
+        console.log(john, this.stars.currentTime);
+
+        john += 1;
     }
 
 
@@ -99,7 +109,7 @@ class App {
 
     drawStars() {
 
-        this.stars = new Stars(this.scene);
+        this.stars = new StarsSky(this.scene);
         this.scene.addChild(this.stars);
 
     }

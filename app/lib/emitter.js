@@ -83,7 +83,7 @@ class Emitter extends Container {
         this.averageFrequency = sumFrequency/20;
         //console.log(this.averageFrequency);
 
-        if(this.averageFrequency > 180 && this.currentTimePulse > 140/60*1000) {
+        if(this.averageFrequency > 170 && this.currentTimePulse > 140/60*1000) {
             this.pulse(dt);
         }
 

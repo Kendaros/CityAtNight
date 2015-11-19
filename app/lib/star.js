@@ -5,23 +5,23 @@ class Star extends Graphics {
 
         super();
 
-        this.alpha = 0;
-        this.isVisible = false;
+        this.alpha = 1;
+        this.isVisible = true;
         this.currentTime = 0;
 
         this.x = Math.random() * window.innerWidth;
         this.y = Math.random() * window.innerHeight / 2;
 
-        this.beginFill(0xFAFBCF)
+        this.beginFill(0xFAFBCF);
         this.drawCircle(0, 0, 1);
         this.endFill();
     }
 
     move(dt, speed, scale) {
 
-        if (this.alpha < 1){
-            this.alpha += 0.01;
-        }
+        //if (this.alpha < 1){
+        //    this.alpha += 0.01;
+        //}
 
         this.currentTime += dt;
         this.x -= speed;
@@ -31,11 +31,6 @@ class Star extends Graphics {
         if (this.x <= 0) {
             this.x = window.innerWidth;
         }
-    }
-
-    appear(){
-
-
     }
 }
 

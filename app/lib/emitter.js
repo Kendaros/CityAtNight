@@ -72,16 +72,16 @@ class Emitter extends Container {
 
         var sumFrequency = 0;
 
-        for (let i = 0; i < (this.frequencyData.length - 1024/4); i++) {
+        for (let i = 20; i < 40; i++) {
 
             sumFrequency += this.frequencyData[i];
 
         }
 
-        this.averageFrequency = sumFrequency/(this.frequencyData.length - 1024/4);
+        this.averageFrequency = sumFrequency/20;
         //console.log(this.averageFrequency);
 
-        if(this.averageFrequency > 70 && this.currentTimePulse > 140/60*1000) {
+        if(this.averageFrequency > 180 && this.currentTimePulse > 140/60*1000) {
             this.pulse(dt);
         }
 

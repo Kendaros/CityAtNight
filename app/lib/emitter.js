@@ -54,6 +54,8 @@ class Emitter extends Container {
 
     update(dt) {
 
+        //console.log("Moon Update", dt);
+
         for (var i = 0; i < this.particles.length; i++) {
 
 

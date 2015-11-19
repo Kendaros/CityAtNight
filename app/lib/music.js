@@ -1,5 +1,9 @@
+import EventEmitter from './event-emitter';
+
 class Music {
-    constructor() {
+    constructor(soundPath) {
+
+        this.soundPath = soundPath;
 
         this.audioCtx = new AudioContext();
         this.analyser = this.audioCtx.createAnalyser();
@@ -11,7 +15,7 @@ class Music {
     loadSound() {
 
         var request = new XMLHttpRequest();
-        request.open('GET', 'assets/sounds/lifeformed-sunbleach.mp3', true);
+        request.open('GET', this.soundPath, true);
         request.responseType = 'arraybuffer';
         // Decode asynchronously
         request.onload = function () {
@@ -26,6 +30,8 @@ class Music {
                 this.analyser.connect(this.audioCtx.destination);
                 // play sound
                 this.audioSource.start();
+
+                EventEmitter.emit( 'MUSIC_LOADED' );
             }.bind(this), function () {
                 // error callback
                 //
@@ -33,6 +39,7 @@ class Music {
         }.bind(this);
         request.send();
     }
+
 }
 
 export default Music

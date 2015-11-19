@@ -7,31 +7,37 @@ import Music from './lib/music'
 import City from './lib/city'
 import Emitter from './lib/emitter'
 import Stars from './lib/stars'
-
+import EventEmitter from './lib/event-emitter'
 
 class App {
 
     constructor() {
 
-        this.DELTA_TIME = 0;
-        this.LAST_TIME = Date.now();
+        EventEmitter.on('MUSIC_LOADED', this.onMusicLoaded.bind(this));
 
         this.width = window.innerWidth;
         this.height = window.innerHeight;
 
         this.scene = new Scene();
-        this.music = new Music();
+        this.music = new Music("assets/sounds/lifeformed-sunbleach.mp3");
 
-        let root = document.body.querySelector('.app')
+        let root = document.body.querySelector('.app');
         root.appendChild(this.scene.renderer.view);
 
 
         this.drawMoon();
         this.drawStars();
-        this.drawCity();
+        //this.drawCity();
 
-        this.addListeners();
         this.music.loadSound();
+
+    }
+
+    onMusicLoaded() {
+
+        this.DELTA_TIME = 0;
+        this.LAST_TIME = Date.now();
+        this.addListeners();
 
     }
 
@@ -66,12 +72,14 @@ class App {
      */
     update() {
 
+        //console.log("App update");
+
         this.music.analyser.getByteFrequencyData(this.music.frequencyData);
 
         this.DELTA_TIME = Date.now() - this.LAST_TIME;
         this.LAST_TIME = Date.now();
 
-        this.city.update();
+        //this.city.update();
 
         this.moon.update(this.DELTA_TIME);
         this.moon.move(this.DELTA_TIME);
@@ -102,9 +110,6 @@ class App {
         this.scene.addChild(this.moon);
 
     }
-
-
-
 
 
 }

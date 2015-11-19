@@ -9,6 +9,7 @@ class StarsLayer extends Container {
         super();
 
         this.nbStars = nbStars;
+        this.stars = [];
         this.alpha = 0;
         this.isVisible = false;
         this.addStarsToLayer();
@@ -18,7 +19,14 @@ class StarsLayer extends Container {
     addStarsToLayer() {
         for (let j = 0; j < this.nbStars; j++) {
             var star = new Star();
+            this.stars.push(star);
             this.addChild(star);
+        }
+    }
+
+    move(dt, speed, scale) {
+        for (let j = 0; j < this.stars.length ; j++) {
+            this.stars[j].move(dt, speed, scale);
         }
     }
 

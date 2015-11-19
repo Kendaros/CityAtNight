@@ -19,10 +19,6 @@ class Star extends Graphics {
 
     move(dt, speed, scale) {
 
-        //if (this.alpha < 1){
-        //    this.alpha += 0.01;
-        //}
-
         this.currentTime += dt;
         this.x -= speed;
         this.scaleX = scale;

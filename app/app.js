@@ -29,7 +29,7 @@ class App {
 
         this.drawMoon();
         this.drawStars();
-        //this.drawCity();
+        this.drawCity();
 
         this.music.loadSound();
 
@@ -51,7 +51,7 @@ class App {
         window.addEventListener('resize', this.onResize.bind(this));
         TweenMax.ticker.addEventListener('tick', this.update.bind(this));
 
-        window.addEventListener('click', this.log.bind(this));
+        //window.addEventListener('click', this.log.bind(this));
 
     }
 
@@ -89,7 +89,7 @@ class App {
         this.DELTA_TIME = Date.now() - this.LAST_TIME;
         this.LAST_TIME = Date.now();
 
-        //this.city.update();
+        this.city.update();
 
         this.moon.update(this.DELTA_TIME);
         this.moon.move(this.DELTA_TIME);

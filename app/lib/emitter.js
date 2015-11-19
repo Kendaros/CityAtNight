@@ -14,6 +14,7 @@ class Emitter extends Container {
         this.pool = [];
         this.currentTime = 0;
         this.currentTimePulse = 0;
+        this.pulseThreshold = 0;
         this.nb = 10000;
 
         this.options = {
@@ -83,12 +84,15 @@ class Emitter extends Container {
         this.averageFrequency = sumFrequency/20;
         //console.log(this.averageFrequency);
 
-        if(this.averageFrequency > 170 && this.currentTimePulse > 140/60*1000) {
+        //console.log(this.pulseThreshold);
+
+        if(this.averageFrequency > 170 && this.currentTimePulse > 140/60*1000 && this.pulseThreshold >= 51000) {
             this.pulse(dt);
         }
 
         this.currentTime += dt;
         this.currentTimePulse += dt;
+        this.pulseThreshold += dt;
     }
 
     move(dt) {
@@ -97,7 +101,7 @@ class Emitter extends Container {
     }
 
 
-    pulse() {
+    pulse(dt) {
 
         for (let i = 0; i < 100; i++) {
             let particle = this.getParticleFromPool();

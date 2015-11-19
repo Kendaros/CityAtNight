@@ -2,6 +2,7 @@ import { Container } from 'pixi.js';
 
 import StarsLayer from './starslayer'
 import Utils from '../utils/number-utils'
+import Comet from './comet'
 
 class StarsSky extends Container {
     constructor(scene) {
@@ -12,7 +13,7 @@ class StarsSky extends Container {
 
         this.scene = scene;
         this.nbLayers = 22;
-        this.nbStars = 3;
+        this.nbStars = 5;
         this.starsLayers = [];
 
         for (var i = 0; i < this.nbLayers; i++) {
@@ -59,6 +60,19 @@ class StarsSky extends Container {
             this.addLayer(21, 51000);
 
         }
+
+        //if(this.currentTime >= 3000) {
+        //    if(!this.cometAdded){
+        //        this.comet = new Comet();
+        //        this.scene.addChild(this.comet);
+        //        this.cometAdded = true;
+        //        console.log("Comet incoming");
+        //    }
+        //
+        //    this.comet.update(dt);
+        //}
+
+
     }
 
     addLayer(layerIndex, time) {

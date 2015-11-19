@@ -6,13 +6,13 @@ class Particle extends Sprite {
         var texture = PIXI.Texture.fromImage("./assets/img/particle.png");
 
         super(texture);
-        this.x = options.x;
-        this.y = options.y;
-        this.acceleration = 0.1;
-        this.vx = this.acceleration;
-        this.vy = this.acceleration;
+        this.options = options;
+        this.x = this.options.x;
+        this.y = this.options.y;
+        this.vx = this.options.acceleration;
+        this.vy = this.options.acceleration;
         this.angle =  Math.floor(Math.random() * 360)+1;
-        this.life = 1000;
+        this.life = this.options.life;
         //this.beginFill('0xFFFFFF');
         this.size = Math.random()*2;
         //this.drawCircle(0, 0, this.size);
@@ -44,13 +44,12 @@ class Particle extends Sprite {
     reset(options) {
         this.x = options.x;
         this.y = options.y;
-        this.acceleration = 0.1;
-        this.vx = this.acceleration;
-        this.vy = this.acceleration;
-        this.scale.factor = Math.random() * 1.2;
-        this.scale.x = this.scale.factor;
-        this.scale.y = this.scale.factor;
-        this.life = 1000;
+        this.vx = this.options.acceleration;
+        this.vy = this.options.acceleration;
+        this.scaleFactor = Math.random() * this.options.scaleFactor;
+        this.scale.x = this.scaleFactor;
+        this.scale.y = this.scaleFactor;
+        this.life = this.options.life;
         this.alpha = 1;
 
         this.isAlive = true;

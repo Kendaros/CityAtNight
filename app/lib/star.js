@@ -10,7 +10,7 @@ class Star extends Graphics {
         this.currentTime = 0;
 
         this.x = Math.random() * window.innerWidth;
-        this.y = Math.random() * window.innerHeight / 2;
+        this.y = Math.random() * window.innerHeight / 1.5;
 
         this.beginFill(0xFAFBCF);
         this.drawCircle(0, 0, 1);

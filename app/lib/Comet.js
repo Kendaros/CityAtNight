@@ -1,25 +1,44 @@
 import { Container } from 'pixi.js';
 
 import Particle from './particle'
-import Utils from '../utils/number-utils'
 
-class Emitter extends Container {
-    constructor(frequencyData) {
+class Comet extends Container {
+    constructor() {
 
         super();
-
-        this.frequencyData = frequencyData;
 
         this.particles = [];
         this.pool = [];
         this.currentTime = 0;
-        this.currentTimePulse = 0;
-        this.pulseThreshold = 0;
-        this.nb = 10000;
+        this.delayTime = 0;
+        this.nb = 1000;
+        this.cometLife = 3000;
+
+
+//        var p1 = {
+//            x: Math.random(),
+//            y: Math.random()
+//        };
+//
+//        var p2 = {
+//            x: 40,
+//            y: 40
+//        };
+//
+//// angle in radians
+//        var angleRadians = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+//
+//// angle in degrees
+//        var angleDeg = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
+
+
 
         this.options = {
-            x: 200,
-            y: window.innerHeight / 5
+            x: (Math.random() * window.innerWidth / 2) + window.innerWidth / 2,
+            y: Math.random() * (window.innerHeight/4),
+            life: 600,
+            acceleration: 0.1,
+            scaleFactor: 0.5
         };
 
         for (let i = 0; i < this.nb; i++) {
@@ -55,16 +74,24 @@ class Emitter extends Container {
 
     update(dt) {
 
+
         //console.log("Moon Update", dt);
 
-        for (var i = 0; i < this.particles.length; i++) {
+        this.move(dt);
 
+        if (this.cometLife < 0) {
+            this.alpha -= 0.1;
+        }
+
+
+
+        for (var i = 0; i < this.particles.length; i++) {
 
             this.particles[i].move(dt);
 
             if (this.currentTime > 50) {
                 this.currentTime = 0;
-                this.throw(5);
+                this.throw(10);
             }
 
             if (!this.particles[i].isAlive) {
@@ -73,47 +100,30 @@ class Emitter extends Container {
             }
         }
 
-        var sumFrequency = 0;
-
-        for (let i = 20; i < 40; i++) {
-
-            sumFrequency += this.frequencyData[i];
-
-        }
-
-        this.averageFrequency = sumFrequency/20;
-        //console.log(this.averageFrequency);
-
-        //console.log(this.pulseThreshold);
-
-        if(this.averageFrequency > 170 && this.currentTimePulse > 140/60*1000 && this.pulseThreshold >= 51000) {
-            this.pulse(dt);
-        }
-
         this.currentTime += dt;
-        this.currentTimePulse += dt;
-        this.pulseThreshold += dt;
+        this.cometLife -= dt;
+        this.delayTime += dt;
+
     }
 
     move(dt) {
-        this.speed = (window.innerWidth) / 180 / 180;
-        this.x += this.speed;
+        this.speed = 1;
+        this.x -= this.speed;
     }
-
 
     pulse(dt) {
 
         for (let i = 0; i < 100; i++) {
             let particle = this.getParticleFromPool();
             particle.life = 4000;
-            particle.vx = 6;
-            particle.vy = 6;
+            particle.vx = 1;
+            particle.vy = 1;
             this.particles.push(particle);
             this.addChild(particle);
         }
 
-        this.currentTimePulse = 0;
     }
+
 }
 
-export default Emitter
+export default Comet

@@ -10,7 +10,8 @@ class Scene {
 
     this.width = window.innerWidth;
     this.height = window.innerHeight;
-    this.renderer = new WebGLRenderer( this.width, this.height, { backgroundColor:0x8e0093 ,antialias: true } );
+    //this.renderer = new WebGLRenderer( this.width, this.height, { backgroundColor:0x8e0093 ,antialias: true } );
+    this.renderer = new WebGLRenderer( this.width, this.height, { backgroundColor:0x01022a ,antialias: true } );
 
     this.renderer.view.style.position = 'absolute';
     this.renderer.view.style.display = 'block';

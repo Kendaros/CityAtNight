@@ -28,6 +28,7 @@ class Backgrounds extends Container {
         this.addRandomBackground(72340);
         this.addRandomBackground(72780);
         this.addRandomBackground(73240);
+        //this.addBackground(0x000000, 73240);
 
         this.addRandomBackground(80560);
         this.addRandomBackground(81000);
@@ -74,10 +75,10 @@ class Backgrounds extends Container {
         this.addRandomBackground(163800);
         this.addResetBackground(164230);
 
-        this.addRandomBackground(167840);
-        this.addRandomBackground(168320);
-        this.addRandomBackground(168770);
-        this.addResetBackground(169200);
+        //this.addRandomBackground(167840);
+        //this.addRandomBackground(168320);
+        //this.addRandomBackground(168770);
+        //this.addResetBackground(169200);
     }
 
     update() {
@@ -97,6 +98,23 @@ class Backgrounds extends Container {
             }
 
         }
+
+    }
+
+    /*
+     Add a color background
+     */
+    addBackground(background, timer) {
+
+        var background = {
+
+            startTime: timer,
+            color: background,
+            played: false
+
+        };
+
+        this.backgroundsToAnimate.push(background);
 
     }
 

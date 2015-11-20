@@ -5,7 +5,9 @@ class Music {
 
         this.soundPath = soundPath;
 
-        this.audioCtx = new AudioContext();
+        // SAFARI Compatibility
+        var constructor = window.AudioContext || window.webkitAudioContext;
+        this.audioCtx = new constructor();
         this.analyser = this.audioCtx.createAnalyser();
         this.analyser.smoothingTimeConstant = 0.9;
 
@@ -34,7 +36,7 @@ class Music {
                 var now = Date.now();
                 this.differenceTime = now - this.initTime;
 
-                this.audioSource.start();
+                this.audioSource.start(this.audioCtx.currentTime);
 
                 EventEmitter.emit('MUSIC_LOADED');
             }.bind(this), function () {

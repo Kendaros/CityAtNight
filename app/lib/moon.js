@@ -13,8 +13,17 @@ class Moon extends Container {
         this.pool = [];
         this.currentTime = 0;
         this.currentTimePulse = 0;
-        this.pulseThreshold = 0;
+        this.pulseDelay = 0;
         this.nb = 2000; // This is the number of particles in the pool
+
+        // SAFARI Compatibility
+        if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+            this.frequencyThreshold = 220;
+        }
+        else {
+            this.frequencyThreshold = 200;
+        }
+
 
         // These are the options for the particle
         this.options = {
@@ -84,23 +93,23 @@ class Moon extends Container {
 
         var sumFrequency = 0;
 
+
         for (let i = 0; i < 20; i++) {
             sumFrequency += this.frequencyData[i];
         }
 
         this.averageFrequency = sumFrequency / 20;
-
         /*
          When it goes higher than the 200 threshold (255 being the highest), send a pulse, and set a little delay before being able to send a new pulse.
          */
 
-        if (this.averageFrequency > 200 && this.currentTimePulse > (10 / 60) * 1000 && this.pulseThreshold >= 51000) {
+        if (this.averageFrequency > this.frequencyThreshold && this.currentTimePulse > (10 / 60) * 1000 && this.pulseDelay >= 51000) {
             this.pulse();
         }
 
         this.currentTime += dt;
         this.currentTimePulse += dt;
-        this.pulseThreshold += dt;
+        this.pulseDelay += dt;
     }
 
     move() {

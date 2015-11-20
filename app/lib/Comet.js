@@ -2,6 +2,14 @@ import { Container } from 'pixi.js';
 
 import Particle from './particle'
 
+/*
+
+ THIS CLASS IS NOT USED YET
+
+ For future implementation
+
+ */
+
 class Comet extends Container {
     constructor() {
 
@@ -32,10 +40,9 @@ class Comet extends Container {
 //        var angleDeg = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
 
 
-
         this.options = {
             x: (Math.random() * window.innerWidth / 2) + window.innerWidth / 2,
-            y: Math.random() * (window.innerHeight/4),
+            y: Math.random() * (window.innerHeight / 4),
             life: 600,
             acceleration: 0.1,
             scaleFactor: 0.5
@@ -82,7 +89,6 @@ class Comet extends Container {
         if (this.cometLife < 0) {
             this.alpha -= 0.1;
         }
-
 
 
         for (var i = 0; i < this.particles.length; i++) {

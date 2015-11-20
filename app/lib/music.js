@@ -31,7 +31,7 @@ class Music {
                 // play sound
                 this.audioSource.start();
 
-                EventEmitter.emit( 'MUSIC_LOADED' );
+                EventEmitter.emit('MUSIC_LOADED');
             }.bind(this), function () {
                 // error callback
                 //

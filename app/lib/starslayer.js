@@ -1,7 +1,6 @@
 import { Container } from 'pixi.js';
 
 import Star from './star'
-import Utils from '../utils/number-utils'
 
 class StarsLayer extends Container {
     constructor(nbStars) {
@@ -18,14 +17,16 @@ class StarsLayer extends Container {
 
     addStarsToLayer() {
         for (let j = 0; j < this.nbStars; j++) {
-            var star = new Star();
+
+            // Star Parameters: Speed, Scale
+            var star = new Star(Math.random() * 0.3, Math.random() * 2);
             this.stars.push(star);
             this.addChild(star);
         }
     }
 
     move(dt, speed, scale) {
-        for (let j = 0; j < this.stars.length ; j++) {
+        for (let j = 0; j < this.stars.length; j++) {
             this.stars[j].move(dt, speed, scale);
         }
     }

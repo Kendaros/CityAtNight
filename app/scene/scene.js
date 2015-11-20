@@ -3,65 +3,64 @@ var pixi = require('pixi.js')
 
 class Scene {
 
-  /**
-   * @constructor
-   */
-  constructor() {
+    /**
+     * @constructor
+     */
+    constructor() {
 
-    this.width = window.innerWidth;
-    this.height = window.innerHeight;
-    //this.renderer = new WebGLRenderer( this.width, this.height, { backgroundColor:0x8e0093 ,antialias: true } );
-    this.renderer = new WebGLRenderer( this.width, this.height, { backgroundColor:0x01022a ,antialias: true } );
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
+        this.renderer = new WebGLRenderer(this.width, this.height, {backgroundColor: 0x01022a, antialias: true});
 
-    this.renderer.view.style.position = 'absolute';
-    this.renderer.view.style.display = 'block';
+        this.renderer.view.style.position = 'absolute';
+        this.renderer.view.style.display = 'block';
 
-    this.stage = new Container();
+        this.stage = new Container();
 
-  }
+    }
 
-  /**
-   * Add a child to the stage
-   *
-   * @param {Obj} child - a PIXI object
-   */
-  addChild( child ) {
+    /**
+     * Add a child to the stage
+     *
+     * @param {Obj} child - a PIXI object
+     */
+    addChild(child) {
 
-    this.stage.addChild( child )
+        this.stage.addChild(child)
 
-  }
+    }
 
-  /**
-   * Remove a child from the stage
-   *
-   * @param {Obj} child - a PIXI object
-   */
-  removeChild( child ) {
+    /**
+     * Remove a child from the stage
+     *
+     * @param {Obj} child - a PIXI object
+     */
+    removeChild(child) {
 
-    this.stage.removeChild( child )
+        this.stage.removeChild(child)
 
-  }
+    }
 
-  /**
-   * Renders/Draw the scene
-   */
-  render() {
+    /**
+     * Renders/Draw the scene
+     */
+    render() {
 
-    this.renderer.render( this.stage );
+        this.renderer.render(this.stage);
 
-  }
+    }
 
-  /**
-   * Resize the scene according to screen size
-   *
-   * @param {Number} newWidth
-   * @param {Number} newHeight
-   */
-  resize( newWidth, newHeight ) {
+    /**
+     * Resize the scene according to screen size
+     *
+     * @param {Number} newWidth
+     * @param {Number} newHeight
+     */
+    resize(newWidth, newHeight) {
 
-    this.renderer.resize( newWidth, newHeight )
+        this.renderer.resize(newWidth, newHeight)
 
-  }
+    }
 
 }
 

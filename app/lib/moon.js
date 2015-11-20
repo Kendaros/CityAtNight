@@ -1,7 +1,6 @@
 import { Container } from 'pixi.js';
 
 import Particle from './particle'
-import Utils from '../utils/number-utils'
 
 class Moon extends Container {
     constructor(frequencyData) {
@@ -15,12 +14,13 @@ class Moon extends Container {
         this.currentTime = 0;
         this.currentTimePulse = 0;
         this.pulseThreshold = 0;
-        this.nb = 10000;
+        this.nb = 2000; // This is the number of particles in the pool
 
+        // These are the options for the particle
         this.options = {
             x: 200,
             y: window.innerHeight / 5,
-            life: 1000,
+            life: 2000,
             acceleration: 0.1,
             scaleFactor: 1.2
         };
@@ -46,6 +46,9 @@ class Moon extends Container {
         this.removeChild(this.particles[index]);
     }
 
+    /*
+     Send particles by the emitter
+     */
     throw(nb) {
 
         for (let i = 0; i < nb; i++) {
@@ -58,7 +61,7 @@ class Moon extends Container {
 
     update(dt) {
 
-        //console.log("Moon Update", dt);
+        //console.log(this.particles.length, this.pool.length);
 
         for (var i = 0; i < this.particles.length; i++) {
 
@@ -75,20 +78,23 @@ class Moon extends Container {
             }
         }
 
+        /*
+         Check the average frequency intensity on frenquecies 0 to 20
+         */
+
         var sumFrequency = 0;
 
         for (let i = 0; i < 20; i++) {
-
             sumFrequency += this.frequencyData[i];
-
         }
 
-        this.averageFrequency = sumFrequency/20;
-        //console.log(this.averageFrequency);
+        this.averageFrequency = sumFrequency / 20;
 
-        //console.log(this.pulseThreshold);
+        /*
+         When it goes higher than the 200 threshold (255 being the highest), send a pulse, and set a little delay before being able to send a new pulse.
+         */
 
-        if(this.averageFrequency > 200 && this.currentTimePulse > (10/60)*1000 && this.pulseThreshold >= 51000) {
+        if (this.averageFrequency > 200 && this.currentTimePulse > (10 / 60) * 1000 && this.pulseThreshold >= 51000) {
             this.pulse(dt);
         }
 
@@ -102,11 +108,11 @@ class Moon extends Container {
         this.x += this.speed;
     }
 
-
     pulse(dt) {
 
         for (let i = 0; i < 100; i++) {
             let particle = this.getParticleFromPool();
+            // Setting the pulse particles
             particle.life = 4000;
             particle.vx = 6;
             particle.vy = 6;
@@ -114,6 +120,7 @@ class Moon extends Container {
             this.addChild(particle);
         }
 
+        // Resetting the time for a new pulse
         this.currentTimePulse = 0;
     }
 }

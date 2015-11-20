@@ -1,7 +1,7 @@
 import { Sprite, BLEND_MODES } from 'pixi.js';
 
 class Particle extends Sprite {
-    constructor(options){
+    constructor(options) {
 
         var texture = PIXI.Texture.fromImage("./assets/img/particle.png");
 
@@ -11,36 +11,39 @@ class Particle extends Sprite {
         this.y = this.options.y;
         this.vx = this.options.acceleration;
         this.vy = this.options.acceleration;
-        this.angle =  Math.floor(Math.random() * 360)+1;
         this.life = this.options.life;
-        //this.beginFill('0xFFFFFF');
-        this.size = Math.random()*2;
-        //this.drawCircle(0, 0, this.size);
 
+
+        this.angle = Math.floor(Math.random() * 360) + 1;
+
+        // Setting the anchor of the Texture so it is centred vertically and horizontally
         this.anchor.x = 0.5;
         this.anchor.y = 0.5;
 
+        // Giving a color to the texture and blending it to make a glow effect
         this.tint = 0x111111;
         this.blendMode = BLEND_MODES.ADD;
 
         this.isAlive = true;
-
     }
 
-    move(dt){
-        this.x += Math.sin(this.angle * Math.PI/180) * this.vx;
-        this.y += Math.cos(this.angle * Math.PI/180) * this.vy;
-        if(this.life <= 100){
-            this.alpha = (this.life/100);
+    move(dt) {
+        this.x += Math.sin(this.angle * Math.PI / 180) * this.vx;
+        this.y += Math.cos(this.angle * Math.PI / 180) * this.vy;
+        if (this.life <= 100) {
+            this.alpha = (this.life / 100);
         }
         this.life -= dt;
 
-
-        if(this.life <= 0){
+        // Set isAlive to false so it can be killed
+        if (this.life <= 0) {
             this.isAlive = false;
         }
     }
 
+    /*
+     Resetting all the particle settings
+     */
     reset(options) {
         this.x = options.x;
         this.y = options.y;

@@ -6,24 +6,23 @@ import NumberUtils from './utils/number-utils';
 import Music from './lib/music'
 import City from './lib/city'
 import Moon from './lib/moon'
-import Comet from './lib/comet'
+//import Comet from './lib/comet'
 import StarsSky from './lib/starssky'
 import EventEmitter from './lib/event-emitter'
 
 import Backgrounds from './lib/backgrounds'
 
-var john = 0;
+var clickTimer = 0; // This is a dev variable
 
 class App {
 
     constructor() {
 
+        // When the music is loaded, launch a callback
         EventEmitter.on('MUSIC_LOADED', this.onMusicLoaded.bind(this));
 
-        this.width = window.innerWidth;
-        this.height = window.innerHeight;
-
         this.scene = new Scene();
+        // Here you put the music file path
         this.music = new Music("assets/sounds/lifeformed-sunbleach.mp3");
 
         let root = document.body.querySelector('.app');
@@ -37,14 +36,16 @@ class App {
 
         this.music.loadSound();
 
-        this.timer = 0;
-
     }
 
+    /*
+     When the music is fully loaded, we can launch the timers and the animations
+     */
     onMusicLoaded() {
 
         this.DELTA_TIME = 0;
         this.LAST_TIME = Date.now();
+        this.timer = 0;
         this.addListeners();
 
     }
@@ -57,14 +58,15 @@ class App {
         window.addEventListener('resize', this.onResize.bind(this));
         TweenMax.ticker.addEventListener('tick', this.update.bind(this));
 
-        window.addEventListener('click', this.log.bind(this));
-
+        //window.addEventListener('click', this.log.bind(this)); // DevTool
     }
 
+    /*
+     DevTool method
+     */
     log() {
-        console.log(john, this.stars.currentTime);
-
-        john += 1;
+        console.log(clickTimer, this.stars.currentTime);
+        clickTimer += 1;
     }
 
 
@@ -74,11 +76,7 @@ class App {
      * @param  {obj} evt
      */
     onResize(evt) {
-
-        this.width = window.innerWidth;
-        this.height = window.innerHeight;
-
-        this.scene.resize(this.width, this.height);
+        this.scene.resize(window.innerWidth, window.innerHeight);
     }
 
 
@@ -88,8 +86,7 @@ class App {
      */
     update() {
 
-        //console.log("App update");
-
+        // This is the frequency analyser
         this.music.analyser.getByteFrequencyData(this.music.frequencyData);
 
         this.DELTA_TIME = Date.now() - this.LAST_TIME;
@@ -101,14 +98,11 @@ class App {
         this.moon.move(this.DELTA_TIME);
 
         this.stars.update(this.DELTA_TIME);
-
-        //this.comet.update(this.DELTA_TIME);
+        this.backgrounds.update(this.timer);
 
         this.scene.render();
 
         this.timer += this.DELTA_TIME;
-
-        this.backgrounds.update(this.timer);
 
     }
 

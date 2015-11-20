@@ -8,6 +8,7 @@ class Music {
         // SAFARI Compatibility
         var constructor = window.AudioContext || window.webkitAudioContext;
         this.audioCtx = new constructor();
+
         this.analyser = this.audioCtx.createAnalyser();
         this.analyser.smoothingTimeConstant = 0.9;
 

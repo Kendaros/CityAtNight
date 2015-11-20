@@ -21,7 +21,7 @@ class Moon extends Container {
             this.frequencyThreshold = 220;
         }
         else {
-            this.frequencyThreshold = 200;
+            this.frequencyThreshold = 202;
         }
 
 
@@ -113,7 +113,7 @@ class Moon extends Container {
     }
 
     move() {
-        this.speed = (window.innerWidth) / 180 / 180;
+        this.speed = (window.innerWidth) / 180 / 140;
         this.x += this.speed;
     }
 

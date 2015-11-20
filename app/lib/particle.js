@@ -6,6 +6,16 @@ class Particle extends Sprite {
         var texture = PIXI.Texture.fromImage("./assets/img/particle.png");
 
         super(texture);
+
+        // Setting the anchor of the Texture so it is centred vertically and horizontally
+        this.anchor.x = 0.5;
+        this.anchor.y = 0.5;
+
+        // Giving a color to the texture and blending it to make a glow effect
+        this.tint = 0x111111;
+        this.blendMode = BLEND_MODES.ADD;
+
+
         this.options = options;
         this.x = this.options.x;
         this.y = this.options.y;
@@ -15,14 +25,6 @@ class Particle extends Sprite {
 
 
         this.angle = Math.floor(Math.random() * 360) + 1;
-
-        // Setting the anchor of the Texture so it is centred vertically and horizontally
-        this.anchor.x = 0.5;
-        this.anchor.y = 0.5;
-
-        // Giving a color to the texture and blending it to make a glow effect
-        this.tint = 0x111111;
-        this.blendMode = BLEND_MODES.ADD;
 
         this.isAlive = true;
     }

@@ -28,6 +28,7 @@ class App {
         let root = document.body.querySelector('.app');
         root.appendChild(this.scene.renderer.view);
 
+
         this.drawBackgrounds();
         this.drawMoon();
         this.drawStars();

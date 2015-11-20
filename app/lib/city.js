@@ -28,7 +28,7 @@ class City extends Graphics {
         for (var i = 0; i <= this.numberOfBars; i++) {
 
             // The more intense is the frequency, the less high will be the black bar
-            var height = -(window.innerHeight - (this.frequencyData[i + this.divider] * 2.5));
+            var height = -(window.innerHeight - (this.frequencyData[i + this.divider] * 3.5));
 
             this.drawRect(this.stepX, window.innerHeight, this.barsWidth, height);
 

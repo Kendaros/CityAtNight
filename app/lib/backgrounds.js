@@ -65,8 +65,8 @@ class Backgrounds extends Container {
 
         this.addRandomBackground(154220);
         this.addRandomBackground(154720);
-        this.addRandomBackground(155000);
-        this.addRandomBackground(155530);
+        this.addRandomBackground(155200);
+        this.addRandomBackground(155730);
 
         this.addRandomBackground(162750);
         this.addRandomBackground(163300);

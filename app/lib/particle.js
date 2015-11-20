@@ -32,8 +32,8 @@ class Particle extends Sprite {
     move(dt) {
         this.x += Math.sin(this.angle * Math.PI / 180) * this.vx;
         this.y += Math.cos(this.angle * Math.PI / 180) * this.vy;
-        if (this.life <= 100) {
-            this.alpha = (this.life / 100);
+        if (this.life <= 600) {
+            this.alpha = (this.life / 600);
         }
         this.life -= dt;
 

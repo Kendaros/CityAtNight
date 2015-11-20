@@ -3,13 +3,15 @@ import { Container } from 'pixi.js';
 import StarsLayer from './starslayer'
 
 class StarsSky extends Container {
-    constructor(scene) {
+    constructor(scene, music) {
 
         super();
 
         this.currentTime = 0;
 
         this.scene = scene;
+        this.music = music;
+
         this.nbLayers = 22;
         this.nbStars = 5;
         this.starsLayers = [];
@@ -23,18 +25,19 @@ class StarsSky extends Container {
 
     }
 
-    update(dt) {
+    update() {
 
-        this.currentTime += dt;
+        this.currentTime = this.music.getMusicCurrentTime();
 
         for (let i = 0; i < this.starsLayers.length; i++) {
 
-            this.starsLayers[i].move(dt);
+            this.starsLayers[i].move();
 
             /*
              Always check if we need to add a layer of stars to the sky. If all layers are set to visible, then never go in this loop again (it's good performance wise)
              */
             if (!this.allLayersAreVisible) {
+
                 this.addLayer(0, 27200);
                 this.addLayer(1, 28200);
                 this.addLayer(2, 28550);
@@ -57,6 +60,7 @@ class StarsSky extends Container {
                 this.addLayer(19, 48865);
                 this.addLayer(20, 49000);
                 this.addLayer(21, 51000);
+
             }
 
         }
@@ -67,6 +71,8 @@ class StarsSky extends Container {
      When timing is good, add a layer of stars in order to make it visible
      */
     addLayer(layerIndex, time) {
+
+
         if (this.currentTime >= time && !this.starsLayers[layerIndex].isVisible) {
 
             this.starsLayers[layerIndex].alpha += 0.001;

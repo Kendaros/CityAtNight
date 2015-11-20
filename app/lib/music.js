@@ -10,6 +10,8 @@ class Music {
         this.analyser.smoothingTimeConstant = 0.9;
 
         this.frequencyData = new Uint8Array(this.analyser.frequencyBinCount);
+
+        this.initTime = Date.now();
     }
 
     loadSound() {
@@ -29,6 +31,9 @@ class Music {
                 this.audioSource.connect(this.analyser);
                 this.analyser.connect(this.audioCtx.destination);
                 // play sound
+                var now = Date.now();
+                this.differenceTime = now - this.initTime;
+
                 this.audioSource.start();
 
                 EventEmitter.emit('MUSIC_LOADED');
@@ -38,6 +43,12 @@ class Music {
             });
         }.bind(this);
         request.send();
+    }
+
+    getMusicCurrentTime() {
+
+        return (this.audioCtx.currentTime * 1000) - this.differenceTime;
+
     }
 
 }

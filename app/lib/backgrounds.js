@@ -1,11 +1,11 @@
 import { Graphics, Container } from 'pixi.js';
 
 class Backgrounds extends Container {
-    constructor(scene) {
+    constructor(music) {
 
         super();
 
-        this.scene = scene;
+        this.music = music;
 
         this.circles = []; // array which contains all the Circles Graphics
         this.backgroundsToAnimate = []; // array of objects which contains all backgrounds
@@ -15,7 +15,8 @@ class Backgrounds extends Container {
          This is the Timeline of our animation (backgrounds)
          */
         this.addRandomBackground(58200);
-        this.addRandomBackground(58800);
+        this.addRandomBackground(58600);
+        this.addRandomBackground(59000);
         this.addResetBackground(59400);
 
         this.addRandomBackground(66800);
@@ -63,8 +64,8 @@ class Backgrounds extends Container {
         this.addRandomBackground(149900);
         this.addResetBackground(150320);
 
-        this.addRandomBackground(154220);
-        this.addRandomBackground(154720);
+        this.addRandomBackground(154320);
+        this.addRandomBackground(154780);
         this.addRandomBackground(155200);
         this.addRandomBackground(155730);
 
@@ -79,14 +80,16 @@ class Backgrounds extends Container {
         this.addResetBackground(169200);
     }
 
-    update(timer) {
+    update() {
+
+        this.currentTime = this.music.getMusicCurrentTime();
 
         /*
          Always check Timer and if we should animate a background or not
          */
         for (let i = 0; i < this.backgroundsToAnimate.length; i++) {
 
-            if (timer > this.backgroundsToAnimate[i].startTime && !this.backgroundsToAnimate[i].played) {
+            if (this.currentTime > this.backgroundsToAnimate[i].startTime && !this.backgroundsToAnimate[i].played) {
 
                 this.backgroundsToAnimate[i].played = true; // Flagging a background to played so it can be deleted
                 this.animateBackground(this.backgroundsToAnimate[i].color);

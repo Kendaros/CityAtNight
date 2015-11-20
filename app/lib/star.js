@@ -20,9 +20,8 @@ class Star extends Graphics {
         this.endFill();
     }
 
-    move(dt) {
+    move() {
 
-        this.currentTime += dt;
         this.x -= this.speed;
 
         if (this.x <= 0) {

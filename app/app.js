@@ -12,7 +12,7 @@ import EventEmitter from './lib/event-emitter'
 
 import Backgrounds from './lib/backgrounds'
 
-var clickTimer = 0; // This is a dev variable
+// var clickTimer = 0; // This is a dev variable
 
 class App {
 
@@ -46,7 +46,6 @@ class App {
 
         this.DELTA_TIME = 0;
         this.LAST_TIME = Date.now();
-        this.timer = 0;
         this.addListeners();
 
     }
@@ -61,15 +60,6 @@ class App {
 
         //window.addEventListener('click', this.log.bind(this)); // DevTool
     }
-
-    /*
-     DevTool method
-     */
-    log() {
-        console.log(clickTimer, this.stars.currentTime);
-        clickTimer += 1;
-    }
-
 
     /**
      * onResize
@@ -96,14 +86,12 @@ class App {
         this.city.update();
 
         this.moon.update(this.DELTA_TIME);
-        this.moon.move(this.DELTA_TIME);
+        this.moon.move();
 
-        this.stars.update(this.DELTA_TIME);
-        this.backgrounds.update(this.timer);
+        this.stars.update();
+        this.backgrounds.update();
 
         this.scene.render();
-
-        this.timer += this.DELTA_TIME;
 
     }
 
@@ -116,7 +104,7 @@ class App {
 
     drawStars() {
 
-        this.stars = new StarsSky(this.scene);
+        this.stars = new StarsSky(this.scene, this.music);
         this.scene.addChild(this.stars);
 
     }
@@ -137,8 +125,17 @@ class App {
 
     drawBackgrounds() {
 
-        this.backgrounds = new Backgrounds();
+        this.backgrounds = new Backgrounds(this.music);
         this.scene.addChild(this.backgrounds);
+    }
+
+
+    /*
+     DevTool method
+     */
+    log() {
+        console.log(clickTimer, this.stars.currentTime);
+        clickTimer += 1;
     }
 
 

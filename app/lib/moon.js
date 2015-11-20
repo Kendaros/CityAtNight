@@ -95,7 +95,7 @@ class Moon extends Container {
          */
 
         if (this.averageFrequency > 200 && this.currentTimePulse > (10 / 60) * 1000 && this.pulseThreshold >= 51000) {
-            this.pulse(dt);
+            this.pulse();
         }
 
         this.currentTime += dt;
@@ -103,12 +103,12 @@ class Moon extends Container {
         this.pulseThreshold += dt;
     }
 
-    move(dt) {
+    move() {
         this.speed = (window.innerWidth) / 180 / 180;
         this.x += this.speed;
     }
 
-    pulse(dt) {
+    pulse() {
 
         for (let i = 0; i < 100; i++) {
             let particle = this.getParticleFromPool();
